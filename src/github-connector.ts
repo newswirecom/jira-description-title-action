@@ -2,7 +2,7 @@ import { context, GitHub } from '@actions/github/lib/github';
 import { PullsUpdateParams } from '@octokit/rest';
 import { getInputs } from './action-inputs';
 import { ESource, IGithubData, JIRADetails, PullRequestParams } from './types';
-import { buildPRDescription, getJIRAIssueKeyByDefaultRegexp, getJIRAIssueKeysByCustomRegexp, getPRDescription } from './utils';
+import { buildPRDescription, getJIRAIssueKeyByDefaultRegexp, getJIRAIssueKeysByCustomRegexp, getPRDescription, getUpdatedTitle } from './utils';
 
 export class GithubConnector {
   client: GitHub = {} as GitHub;
@@ -71,7 +71,7 @@ export class GithubConnector {
       repo,
       pull_number: prNumber,
       body: getPRDescription(prBody, buildPRDescription(details)),
-      title: getUpdatedTitle(prTitle, details)
+      title: getUpdatedTitle(prTitle, details),
     };
 
     return await this.client.pulls.update(prData);
