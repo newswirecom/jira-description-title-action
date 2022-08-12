@@ -72,9 +72,18 @@ export const buildPRDescription = (details: JIRADetails) => {
   return `
 <table>
 <td>
-  <a href="${details.url}" title="${displayKey}" target="_blank"><img alt="${details.type.name}" src="${details.type.icon}" />${displayKey}</a>  ${details.summary}
+  <a href="${details.url}" title="${displayKey}" target="_blank">${displayKey}</a> ${details.summary}
   </td></table>
   <br />
  
 `;
+};
+
+export const getUpdatedTitle = (existingTitle: string, details: JIRADetails) => {
+  const displayKey = details.key.toUpperCase();
+  if (existingTitle.includes(displayKey)) {
+    return existingTitle;
+  }
+
+  return `[${displayKey}] ${existingTitle}`;
 };

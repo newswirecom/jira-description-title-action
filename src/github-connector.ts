@@ -64,13 +64,14 @@ export class GithubConnector {
     const owner = this.githubData.owner;
     const repo = this.githubData.repository.name;
     console.log('Updating PR details');
-    const { number: prNumber = 0, body: prBody = '' } = this.githubData.pullRequest;
+    const { number: prNumber = 0, body: prBody = '', title: prTitle = '' } = this.githubData.pullRequest;
 
     const prData: PullsUpdateParams = {
       owner,
       repo,
       pull_number: prNumber,
       body: getPRDescription(prBody, buildPRDescription(details)),
+      title: getUpdatedTitle(prTitle, details)
     };
 
     return await this.client.pulls.update(prData);
